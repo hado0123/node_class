@@ -1,4 +1,5 @@
 const express = require('express')
+const passport = require('passport')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
@@ -61,7 +62,40 @@ router.post('/join', async (req, res, next) => {
 })
 
 //로그인 localhost:8000/auth/login
-router.post('/login', async (req, res, next) => {})
+router.post('/login', async (req, res, next) => {
+   passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+         //로그인 인증 중 에러 발생시
+         return res.status(500).json({ success: false, message: '인증 중 오류 발생', error: authError })
+      }
+
+      if (!user) {
+         //비밀번호 불일치 또는 사용자가 없을 경우 info.message를 사용해서 메세지 전달
+         return res.status(401).json({
+            success: false,
+            message: info.message || '로그인 실패',
+         })
+      }
+
+      // 인증이 정상적으로 되고 사용자를 로그인 상태로 바꿈
+      req.login(user, (loginError) => {
+         if (loginError) {
+            //로그인 상태로 바꾸는 중 오류 발생시
+            return res.status(500).json({ success: false, message: '로그인 중 오류 발생', error: loginError })
+         }
+
+         //로그인 성공시 user객체와 함께 response
+         res.json({
+            success: true,
+            message: '로그인 성공',
+            user: {
+               id: user.id,
+               nick: user.nick,
+            },
+         })
+      })
+   })(req, res, next)
+})
 
 //로그아웃 localhost:8000/auth/logout
 router.get('/logout', async (req, res, next) => {})
