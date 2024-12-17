@@ -1,6 +1,17 @@
 import { Container, Typography, Pagination, Stack } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPostsThunk } from '../features/postSlice'
 
-const Home = () => {
+const Home = ({ isAuthenticated, user }) => {
+   const [page, setPage] = useState(1) // 현재 페이지
+   const dispatch = useDispatch()
+   const { posts, pagination, loading, error } = useSelector((state) => state.posts)
+
+   useEffect(() => {
+      dispatch(fetchPostsThunk(page))
+   }, [dispatch, page])
+
    return (
       <Container maxWidth="xs">
          <Typography variant="h4" align="center" gutterBottom>
