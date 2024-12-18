@@ -22,7 +22,7 @@ const upload = multer({
          cb(null, 'uploads/') // uploads폴더에 저장
       },
       filename(req, file, cb) {
-         const decodedFileName = decodeURIComponent(file.originalname) //파일명 디코딩(한글 파일명 깨짐 방지)
+         const decodedFileName = decodeURIComponent(file.originalname) //파일명 디코딩(한글 파일명 깨짐 방지) => 제주도.jpg
          const ext = path.extname(decodedFileName) //확장자 추출
          const basename = path.basename(decodedFileName, ext) //확장자 제거한 파일명 추출
 
