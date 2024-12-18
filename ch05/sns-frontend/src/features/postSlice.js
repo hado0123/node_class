@@ -119,6 +119,19 @@ const postSlice = createSlice({
             state.loading = false
             state.error = action.payload
          })
+      // 게시물 수정
+      builder
+         .addCase(updatePostThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(updatePostThunk.fulfilled, (state, action) => {
+            state.loading = false
+         })
+         .addCase(updatePostThunk.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+         })
    },
 })
 

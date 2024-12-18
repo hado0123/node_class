@@ -83,7 +83,11 @@ const PostForm = ({ onSubmit, initialValues = {} }) => {
          const formData = new FormData() //폼 데이터를 쉽게 생성하고 전송할 수 있도록 하는 객체
          formData.append('content', content) //게시물 내용 추가
          formData.append('hashtags', hashtags) //해시태그 추가
-         formData.append('img', imgFile) //이미지 파일 추가
+
+         // 파일명 인코딩(한글 파일명 깨짐 방지)
+         const encodedFile = new File([imgFile], encodeURIComponent(imgFile.name), { type: imgFile.type })
+
+         formData.append('img', encodedFile) //이미지 파일 추가
 
          //등록할때는 PostCreatePage.jsx 의 handleSubmit() 함수를 실행시킴
          //수정할때는 PostEditPage.jsx 의 handleSubmit() 함수를 실행시킴
