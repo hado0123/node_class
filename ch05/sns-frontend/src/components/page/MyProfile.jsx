@@ -69,7 +69,7 @@ const MyProfile = ({ auth }) => {
 
    return (
       <>
-         {user && (
+         {user && auth && (
             <Card sx={{ minWidth: 275 }}>
                <CardContent>
                   <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
