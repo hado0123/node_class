@@ -8,10 +8,17 @@ require('dotenv').config() // 환경 변수 관리
 const cors = require('cors') // cors 미들웨어 -> ★api 서버는 반드시 설정해줘야 한다
 
 // 라우터 및 기타 모듈 불러오기
+const indexRouter = require('./routes')
+const authRouter = require('./routes/auth')
+const itemRouter = require('./routes/item')
+const orderRouter = require('./routes/order')
+const tokenRouter = require('./routes/token')
 
 const { sequelize } = require('./models')
+const passportConfig = require('./passport')
 
 const app = express()
+passportConfig()
 app.set('port', process.env.PORT || 8002)
 
 // 시퀄라이즈를 사용한 DB연결
@@ -50,8 +57,15 @@ const sessionMiddleware = session({
 app.use(sessionMiddleware)
 
 //Passport 초기화, 세션 연동
+app.use(passport.initialize())
+app.use(passport.session())
 
 //라우터 등록
+app.use('/', indexRouter)
+app.use('/auth', authRouter)
+app.use('/item', itemRouter)
+app.use('/order', orderRouter)
+app.use('/token', tokenRouter)
 
 // HTTP 서버 생성
 
