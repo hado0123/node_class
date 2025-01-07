@@ -2,13 +2,15 @@ import './styles/common.css'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkAuthStatusThunk } from './features/authSlice'
+import { useEffect } from 'react'
 
 import Navbar from './components/shared/Navbar'
 import Footer from './components/shared/Footer'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import Home from './pages/Home'
-import { useEffect } from 'react'
+
+import RedirectLoginRoute from './components/auth/RedirectLoginRoute'
 
 function App() {
    const dispatch = useDispatch()
@@ -25,7 +27,15 @@ function App() {
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route
+               path="/login"
+               element={
+                  // 로그인 상태일때는 home으로 리다이렉트
+                  <RedirectLoginRoute>
+                     <LoginPage />
+                  </RedirectLoginRoute>
+               }
+            />
          </Routes>
          <Footer />
       </>
