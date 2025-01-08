@@ -51,7 +51,9 @@ function ItemForm({ initialValues = {} }) {
    }, [])
 
    // 상품 등록
-   const handleSubmit = useCallback((e) => {}, [])
+   const handleSubmit = useCallback((e) => {
+      // formData.append('img', encodedFile)
+   }, [])
 
    // 가격에서 콤마 제거
    const handlePriceChange = useCallback((e) => {
