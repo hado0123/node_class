@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
 
-function ItemForm() {
+function ItemForm({ initialValues = {} }) {
    // 이미지가 여러개 이므로 배열로 다룬다
    const [imgUrls, setImgUrls] = useState([]) // 이미지 경로
    const [imgFiles, setImgFiles] = useState([]) // 이미지 파일 객체
@@ -76,7 +76,7 @@ function ItemForm() {
          />
 
          {/* 재고 입력 필드 */}
-         <TextField label="재고수량" variant="outlined" fullWidth value={stockNumber} onChange={(e) => setItemSellStatus(e.target.value)} placeholder="재고수량" sx={{ mt: 2 }} />
+         <TextField label="재고수량" variant="outlined" fullWidth value={stockNumber} onChange={(e) => setStockNumber(e.target.value)} placeholder="재고수량" sx={{ mt: 2 }} />
 
          {/* 판매 상태 선택 필드 */}
          <FormControl fullWidth sx={{ mt: 2 }}>

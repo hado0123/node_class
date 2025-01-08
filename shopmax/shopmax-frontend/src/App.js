@@ -9,8 +9,12 @@ import Footer from './components/shared/Footer'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import Home from './pages/Home'
+import ItemCreatePage from './pages/ItemCreatePage'
+import ItemEditPage from './pages/ItemEditPage'
+import ItemListPage from './pages/ItemListPage'
 
 import RedirectLoginRoute from './components/auth/RedirectLoginRoute'
+import AdminRoute from './components/auth/AdminRoute'
 
 function App() {
    const dispatch = useDispatch()
@@ -34,6 +38,37 @@ function App() {
                   <RedirectLoginRoute>
                      <LoginPage />
                   </RedirectLoginRoute>
+               }
+            />
+
+            {/* 상품 등록 */}
+            <Route
+               path="/items/create"
+               element={
+                  // 관리자가 아닐경우 home으로 리다이렉트
+                  <AdminRoute>
+                     <ItemCreatePage />
+                  </AdminRoute>
+               }
+            />
+            {/* 상품 수정 */}
+            <Route
+               path="/items/edit/:id"
+               element={
+                  // 관리자가 아닐경우 home으로 리다이렉트
+                  <AdminRoute>
+                     <ItemEditPage />
+                  </AdminRoute>
+               }
+            />
+            {/* 상품리스트 */}
+            <Route
+               path="/items/createlist"
+               element={
+                  // 관리자가 아닐경우 home으로 리다이렉트
+                  <AdminRoute>
+                     <ItemListPage />
+                  </AdminRoute>
                }
             />
          </Routes>
