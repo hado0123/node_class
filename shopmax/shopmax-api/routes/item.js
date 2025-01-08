@@ -1,6 +1,10 @@
 const express = require('express')
-const router = express.Router()
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 const { isAdmin } = require('./middlewares')
+const { Item, Img } = require('../models')
+const router = express.Router()
 
 // uploads 폴더가 없을 경우 새로 생성
 try {
@@ -38,10 +42,40 @@ router.post('/', isAdmin, upload.array('img'), async (req, res) => {
    try {
       // 업로드된 파일 확인
       if (!req.files) {
-         res.status(400).json({ success: false, message: '파일 업로드에 실패했습니다.', error })
+         return res.status(400).json({ success: false, message: '파일 업로드에 실패했습니다.', error })
       }
 
-      // 상품 생성
+      //상품 insert
+      const { itemNm, price, stockNumber, itemDetail, itemSellStatus } = req.body
+      const item = await Item.create({
+         itemNm,
+         price,
+         stockNumber,
+         itemDetail,
+         itemSellStatus,
+      })
+
+      const images = req.files.map((file) => ({
+         oriImgName: file.originalname, //원본 이미지명
+         imgUrl: `/${file.filename}`, //이미지 경로
+         repImgYn: 'N', // 기본적으로 'N' 설정
+         itemId: item.id, // 생성된 상품 ID 연결
+      }))
+
+      // 첫 번째 이미지는 대표 이미지로 설정
+      if (images.length > 0) {
+         images[0].repImgYn = 'Y'
+      }
+
+      // 이미지 여러개 insert
+      await Img.bulkCreate(images)
+
+      res.status(201).json({
+         success: true,
+         message: '상품과 이미지가 성공적으로 등록되었습니다.',
+         item,
+         images,
+      })
    } catch (error) {
       console.error(error)
       res.status(500).json({ success: false, message: '상품 등록 중 오류가 발생했습니다.', error })

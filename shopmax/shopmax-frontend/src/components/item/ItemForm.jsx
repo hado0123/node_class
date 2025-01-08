@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
 import { formatWithComma, stripComma } from '../../utils/priceSet'
 
-function ItemForm({ initialValues = {} }) {
+function ItemForm({ onSubmit, initialValues = {} }) {
    // 이미지가 여러개 이므로 배열로 다룬다
    const [imgUrls, setImgUrls] = useState([]) // 이미지 경로
    const [imgFiles, setImgFiles] = useState([]) // 이미지 파일 객체
@@ -51,9 +51,53 @@ function ItemForm({ initialValues = {} }) {
    }, [])
 
    // 상품 등록
-   const handleSubmit = useCallback((e) => {
-      // formData.append('img', encodedFile)
-   }, [])
+   const handleSubmit = useCallback(
+      (e) => {
+         e.preventDefault()
+
+         if (!itemNm.trim()) {
+            alert('상품명을 입력하세요.')
+            return
+         }
+
+         if (!String(price).trim()) {
+            alert('가격을 입력하세요.')
+            return
+         }
+
+         if (!String(stockNumber).trim()) {
+            alert('재고를 입력하세요.')
+            return
+         }
+
+         if (!itemDetail.trim()) {
+            alert('상품설명을 입력하세요.')
+            return
+         }
+
+         // && imgUrls.length === 0 수정시 이미지를 바꾸지 않으면 alert 창이 뜨는 현상을 방지
+         if (imgFiles.length === 0 && imgUrls.length === 0) {
+            alert('이미지를 최소 1개 이상 업로드하세요.')
+            return
+         }
+
+         const formData = new FormData()
+         formData.append('itemNm', itemNm)
+         formData.append('price', price)
+         formData.append('stockNumber', stockNumber)
+         formData.append('itemSellStatus', itemSellStatus)
+         formData.append('itemDetail', itemDetail)
+
+         // 이미지 파일 여러개 인코딩 처리(한글 파일명 깨짐 방지) 및 추가
+         imgFiles.forEach((file) => {
+            const encodedFile = new File([file], encodeURIComponent(file.name), { type: file.type })
+            formData.append('img', encodedFile)
+         })
+
+         onSubmit(formData)
+      },
+      [itemNm, price, stockNumber, itemSellStatus, itemDetail, imgFiles, onSubmit, imgUrls]
+   )
 
    // 가격에서 콤마 제거
    const handlePriceChange = useCallback((e) => {
