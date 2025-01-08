@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkAuthStatusThunk } from './features/authSlice'
 import { useEffect } from 'react'
+import { Toolbar } from '@mui/material'
 
 import Navbar from './components/shared/Navbar'
 import Footer from './components/shared/Footer'
@@ -28,6 +29,8 @@ function App() {
    return (
       <>
          <Navbar isAuthenticated={isAuthenticated} user={user} />
+         {/* 메뉴에 아래 컨텐츠가 가려져서 보이는 문제 해결 -> Appbar 높이만큼 여백추가 */}
+         <Toolbar />
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignupPage />} />
