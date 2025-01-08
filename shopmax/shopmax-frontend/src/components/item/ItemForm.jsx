@@ -13,14 +13,69 @@ function ItemForm({ initialValues = {} }) {
    const [itemSellStatus, setItemSellStatus] = useState('SELL') // 판매상태
    const [itemDetail, setItemDetail] = useState('') // 상품설명
 
-   // 이미지 파일 변경
-   const handleImageChange = useCallback((e) => {}, [])
+   // 이미지 파일 변경(이미지 미리보기, 이미지 파일 객체를 imgFiles에 저장)
+   const handleImageChange = useCallback((e) => {
+      const files = e.target.files // 업로드된 모든 파일 객체 가져오기
+      // console.log(files)
+      // console.log(files[0])
+
+      if (!files || files.length === 0) return // 파일이 없거나 길이가 0이면 함수 종료
+
+      // 업로드된 파일 객체를 배열로 바꾸고 최대 5개 까지만 선택
+      const newFiles = Array.from(files).slice(0, 5)
+      // console.log(newFiles)
+
+      // 선택된 새 파일로 이미지 객체 상태 업데이트
+      // newFiles = [File, File, File]
+      setImgFiles(newFiles)
+
+      // 미리보기
+      const newImgUrls = newFiles.map((file) => {
+         const reader = new FileReader()
+         reader.readAsDataURL(file) // 파일 데이터 읽기
+
+         //promise 객체를 리턴하여 비동기적으로 FileReader 작업(속도가 빠름)
+         return new Promise((resolve) => {
+            // 파일 읽기가 완료 되었을 때 결과를 promise에 전달
+            // event.target.result: 인코딩 된 이미지 미리보기 url이 들어있음
+            reader.onload = (event) => resolve(event.target.result)
+         })
+      })
+
+      // 모든 파일의 데이터 URL을 생성 완료한 후 실행
+      Promise.all(newImgUrls).then((urls) => {
+         // console.log(urls)
+         // 생성된 새 미리보기 URL로 상태 업데이트
+         setImgUrls(urls)
+      })
+   }, [])
 
    // 상품 등록
    const handleSubmit = useCallback((e) => {}, [])
 
    // 가격에서 콤마 제거
-   const handlePriceChange = useCallback((e) => {}, [])
+   const handlePriceChange = useCallback((e) => {
+      const rawValue = e.target.value // 입력된 가격 10,000
+      const numericValue = stripComma(rawValue) // 콤마 제거
+
+      // 숫자가 아닌 값이 입력되면 리턴
+      const isNumric = /^\d*$/
+      if (!isNumric.test(numericValue)) return
+
+      // price 컬럼의 타입은 int(정수형)이므로 콤마가 붙은 값을 insert 할수 없다. 따라서 price state의 값은 콤마를 제거해 저장한다.
+      setPrice(numericValue)
+   }, [])
+
+   // 재고입력시 숫자만 입력하도록
+   const handleStockChange = useCallback((e) => {
+      const rawValue = e.target.value
+
+      // 숫자가 아닌 값이 입력되면 리턴
+      const isNumric = /^\d*$/
+      if (!isNumric.test(rawValue)) return
+
+      setStockNumber(rawValue)
+   }, [])
 
    // 등록 / 수정 버튼 라벨
    const submitButtonLabel = useMemo(() => (initialValues.id ? '수정하기' : '등록하기'), [initialValues.id])
@@ -63,21 +118,23 @@ function ItemForm({ initialValues = {} }) {
          </Box>
 
          {/* 상품명 입력 필드 */}
-         <TextField label="상품명" variant="outlined" fullWidth value={itemNm} onChange={(e) => setItemNm(e.target.value)} placeholder="상품명" sx={{ mt: 2 }} />
+         <TextField label="상품명" variant="outlined" fullWidth value={itemNm} onChange={(e) => setItemNm(e.target.value)} placeholder="상품명" sx={{ mt: 2 }} inputProps={{ maxLength: 15 }} />
 
          {/* 가격 입력 필드 */}
+         {/* input type='text'에 입력한 텍스트는 숫자여도 JS에서는 문자로 인식한다 */}
          <TextField
             label="가격"
             variant="outlined"
             fullWidth
-            value={price} // 콤마 추가된 값 표시
+            value={formatWithComma(price)} // 콤마 추가된 값 표시
             onChange={handlePriceChange} // 입력 핸들러
             placeholder="가격"
             sx={{ mt: 2 }}
+            inputProps={{ maxLength: 10 }}
          />
 
          {/* 재고 입력 필드 */}
-         <TextField label="재고수량" variant="outlined" fullWidth value={stockNumber} onChange={(e) => setStockNumber(e.target.value)} placeholder="재고수량" sx={{ mt: 2 }} />
+         <TextField label="재고수량" variant="outlined" fullWidth value={stockNumber} onChange={handleStockChange} placeholder="재고수량" sx={{ mt: 2 }} inputProps={{ maxLength: 10 }} />
 
          {/* 판매 상태 선택 필드 */}
          <FormControl fullWidth sx={{ mt: 2 }}>
