@@ -10,7 +10,7 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-// import { Link as MUILink } from '@mui/material'
+import { Link as MUILink } from '@mui/material'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 // https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
@@ -97,9 +97,9 @@ function Navbar({ isAuthenticated, user }) {
                   >
                      <MenuItem>
                         {/* 라우터의 Link 사용시 페이지 state가 그대로 남아있어서 2페이지에 있으면 메뉴를 클릭해도 2페이지가 그대로 보임. 따라서 href사용 */}
-                        <Link to="/items/createlist" style={{ color: 'black', textDecoration: 'none' }}>
+                        <MUILink href="/items/createlist" style={{ color: 'black', textDecoration: 'none' }}>
                            <Typography sx={{ textAlign: 'center' }}>상품등록</Typography>
-                        </Link>
+                        </MUILink>
                      </MenuItem>
                      <MenuItem>
                         <Typography sx={{ textAlign: 'center' }}>상품구매</Typography>
@@ -133,9 +133,9 @@ function Navbar({ isAuthenticated, user }) {
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                   {user && user.role === 'ADMIN' && (
                      <MenuItem>
-                        <Link to="/items/createlist" style={{ color: 'black', textDecoration: 'none' }}>
+                        <MUILink href="/items/createlist" style={{ color: 'black', textDecoration: 'none' }}>
                            <Typography sx={{ textAlign: 'center' }}>상품등록</Typography>
-                        </Link>
+                        </MUILink>
                      </MenuItem>
                   )}
                   <MenuItem>

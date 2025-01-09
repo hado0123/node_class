@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { useState, useEffect, useCallback } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchItemsThunk } from '../../features/itemSlice'
+import { fetchItemsThunk, deleteItemThunk } from '../../features/itemSlice'
 import { formatWithComma } from '../../utils/priceSet'
 
 function ItemList() {
@@ -17,6 +17,19 @@ function ItemList() {
    const [sellCategory, setSellCategory] = useState('') // SELL, SOLD_OUT
    const [searchSubmit, setSearchSubmit] = useState(false) // 검색버튼 클릭 상태
    const [page, setPage] = useState(1) // 페이지 번호
+
+   // 상품 삭제
+   const handleDeleteThunk = useCallback(
+      (id) => {
+         const result = window.confirm('삭제하시겠습니까?')
+
+         if (result) {
+         } else {
+            return
+         }
+      },
+      [dispatch]
+   )
 
    // 데이터 가져오기
    useEffect(() => {
@@ -69,6 +82,7 @@ function ItemList() {
       <Box sx={{ p: 4 }}>
          {/* 등록버튼 */}
          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+            {/* spa방식으로 이동: state가 업데이트가 안됨 */}
             <RouterLink to="/items/create">
                <Button variant="contained">상품등록</Button>
             </RouterLink>
@@ -93,6 +107,7 @@ function ItemList() {
                         <TableRow key={item.id}>
                            <TableCell align="center">{item.id}</TableCell>
                            <TableCell>
+                              {/* a태그랑 같다: 새로고침으로 페이지를 이동 */}
                               <Link href={`/items/edit/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                  {item.itemNm}
                               </Link>

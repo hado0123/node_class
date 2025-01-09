@@ -123,10 +123,10 @@ router.get('/', async (req, res) => {
 
       /*
          whereClause = {
-         itemNm: {
+         itemDetail: {
             [Op.like]: '운동화'
          },
-         {itemSellStatus: 'SELL'}
+         {itemSellStatus: 'SOLD_OUT'}
          }
       */
 
@@ -161,6 +161,31 @@ router.get('/', async (req, res) => {
    } catch (error) {
       console.error(error)
       res.status(500).json({ success: false, message: '상품 목록 조회 중 오류가 발생했습니다.', error })
+   }
+})
+
+// 상품 삭제 localhost:8000/item/:id
+router.delete(':/id', isAdmin, async (req, res) => {
+   try {
+      const { id } = req.params //상품 id
+
+      //상품이 존재하는지 확인
+      const item = await Item.findByPk(id)
+
+      if (!item) {
+         return res.status(404).json({ success: false, message: '상품을 찾을 수 없습니다.' })
+      }
+
+      // 상품 삭제 (연관된 이미지도 삭제됨 - CASCADE 설정)
+      await item.destroy()
+
+      res.json({
+         success: true,
+         message: '상품이 성공적으로 삭제되었습니다.',
+      })
+   } catch (error) {
+      console.error(error)
+      res.status(500).json({ success: false, message: '상품 삭제 중 오류가 발생했습니다.', error })
    }
 })
 
