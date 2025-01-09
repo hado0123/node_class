@@ -24,6 +24,15 @@ function ItemList() {
          const result = window.confirm('삭제하시겠습니까?')
 
          if (result) {
+            dispatch(deleteItemThunk(id))
+               .unwrap()
+               .then(() => {
+                  window.location.href = '/items/createlist' //삭제후 리스트로 이동
+               })
+               .catch((error) => {
+                  console.error('삭제 에러:', error)
+                  alert(`삭제 실패: ${error}`)
+               })
          } else {
             return
          }
@@ -117,7 +126,7 @@ function ItemList() {
                            <TableCell align="center">{dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                            <TableCell align="center">
                               <IconButton aria-label="delete">
-                                 <DeleteIcon />
+                                 <DeleteIcon onClick={() => handleDeleteThunk(item.id)} />
                               </IconButton>
                            </TableCell>
                         </TableRow>
