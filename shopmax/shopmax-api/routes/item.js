@@ -165,7 +165,7 @@ router.get('/', async (req, res) => {
 })
 
 // 상품 삭제 localhost:8000/item/:id
-router.delete(':/id', isAdmin, async (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
    try {
       const { id } = req.params //상품 id
 
