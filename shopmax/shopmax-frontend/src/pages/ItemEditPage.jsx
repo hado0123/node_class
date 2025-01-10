@@ -4,7 +4,7 @@ import ItemForm from '../components/item/ItemForm'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
-import { fetchItemByIdThunk } from '../features/itemSlice'
+import { fetchItemByIdThunk, updateItemThunk } from '../features/itemSlice'
 
 function ItemEditPage() {
    const { id } = useParams() //item의 id
@@ -23,10 +23,26 @@ function ItemEditPage() {
          })
    }, [dispatch, id])
 
+   // 상품수정
+   const handleSubmit = useCallback(
+      (itemData) => {
+         dispatch(updateItemThunk({ id, itemData }))
+            .unwrap()
+            .then(() => {
+               alert('수정이 완료되었습니다.')
+            })
+            .catch((error) => {
+               console.error('상품 수정 에러: ', error)
+               alert(`상품 수정 실패: ${error}`)
+            })
+      },
+      [dispatch, id]
+   )
+
    return (
       <Container maxWidth="md" sx={{ marginTop: 10, marginBottom: 13 }}>
          <h1>상품 수정</h1>
-         {item && <ItemForm initialValues={item} />}
+         {item && <ItemForm onSubmit={handleSubmit} initialValues={item} />}
       </Container>
    )
 }
