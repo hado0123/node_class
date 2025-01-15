@@ -5,7 +5,7 @@ const { Order, Item, User, OrderItem, Img } = require('../models')
 const { isLoggedIn } = require('./middlewares')
 const { Op } = require('sequelize')
 
-// 주문
+// 주문 localhost:8000/order
 router.post('/', isLoggedIn, async (req, res) => {
    /* ★트랜잭션 처리: 주문 처리 중 에러 발생시 차감된 재고를 복구하지 않으면 데이터가 
      불일치 상태가 되므로 트랜잭션 처리 
@@ -18,7 +18,8 @@ router.post('/', isLoggedIn, async (req, res) => {
    const transaction = await sequelize.transaction() // 하나의 트랜잭션
 
    try {
-      // items: {[{itemId: 1, count: 2 }, {itemId: 2, count: 1 }]}
+      // 주문 상품 목록 데이터
+      // req.body = { items: [{itemId: 1, count: 2 }, {itemId: 2, count: 1 }] }
       const { items } = req.body
 
       // 회원 확인(주문은 회원만 가능)
@@ -57,7 +58,7 @@ router.post('/', isLoggedIn, async (req, res) => {
        }
       */
       const orderItemsData = await Promise.all(
-         // items: {[{itemId: 1, count: 2 }, {itemId: 2, count: 1 }]}
+         // items: [{itemId: 1, count: 2 }, {itemId: 2, count: 1 }]
          items.map(async (item) => {
             //1. 주문한 상품이 있는지 확인
             const product = await Item.findByPk(item.itemId, { transaction })
