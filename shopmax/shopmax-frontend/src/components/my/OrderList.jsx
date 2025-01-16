@@ -13,47 +13,51 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrdersThunk } from '../../features/orderSlice'
 
-
 function OrderList() {
-    const dispatch = useDispatch()
-    const { orders, pagination, loading, error} = useSelector((state) => state.order)
-    const [page, setPage] = useState(1)
+   const dispatch = useDispatch()
+   const { orders, pagination, loading, error } = useSelector((state) => state.order)
+   const [page, setPage] = useState(1)
 
-    const [startDate, setStartDate] = useState(null) // 시작날짜(포맷전)
-    const [endDate, setEndDate] = useState(null) // 끝 날짜(포맷전)
-    const [formattedStartDate, setFormattedStartDate] = useState('') //시작날짜(포맷후)
-    const [formattedEndDate, setFormattedEndDate] = useState('') //시작날짜(포맷후)
+   const [startDate, setStartDate] = useState(null) // 시작날짜(포맷전)
+   const [endDate, setEndDate] = useState(null) // 끝 날짜(포맷전)
+   const [formattedStartDate, setFormattedStartDate] = useState('') //시작날짜(포맷후)
+   const [formattedEndDate, setFormattedEndDate] = useState('') //시작날짜(포맷후)
 
-    const [cancelComplete, setCancelComplete] = useState(false) //주문 취소 완료여부 
-    const [deleteComplete, setDeleteComplete] = useState(false) //주문 삭제 완료여부
+   const [cancelComplete, setCancelComplete] = useState(false) //주문 취소 완료여부
+   const [deleteComplete, setDeleteComplete] = useState(false) //주문 삭제 완료여부
 
-    useEffect(() => { 
-        dispatch(getOrdersThunk({
-            page, limit: 5, startDate: formattedStartDate, endDate: formattedEndDate
-        }))
-    }, [dispatch, page, formattedStartDate, formattedEndDate])
+   useEffect(() => {
+      dispatch(
+         getOrdersThunk({
+            page,
+            limit: 5,
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+         })
+      )
+   }, [dispatch, page, formattedStartDate, formattedEndDate])
 
-    //주문 취소
-    const handleCancelOrder = useCallback(() => { }, [])
+   //주문 취소
+   const handleCancelOrder = useCallback((id) => {}, [])
 
-    //주문 삭제
-    const handleDeleteOrder = useCallback(() => { }, [])
+   //주문 삭제
+   const handleDeleteOrder = useCallback((id) => {}, [])
 
-    //날짜 데이터를 포맷
-    const handleDateFilter = useCallback(() => { 
-        if (!startDate || !endDate) { 
-            alert('시작일과 종료일을 지정하세요!')
-            return
-        }
+   //날짜 데이터를 포맷
+   const handleDateFilter = useCallback(() => {
+      if (!startDate || !endDate) {
+         alert('시작일과 종료일을 지정하세요!')
+         return
+      }
 
-        console.log(`startDate: ${startDate}, endDate: ${endDate}`)
+      //   console.log(`startDate: ${startDate}, endDate: ${endDate}`)
 
-        // YYYY-MM-DD 포맷으로 변환
-        setFormattedStartDate(dayjs(startDate).format('YYYY-MM-DD'))
-        setFormattedEndDate(dayjs(endDate).format('YYYY-MM-DD'))
-        
-        setPage(1)
-    }, [startDate, endDate])
+      // YYYY-MM-DD 포맷으로 변환
+      setFormattedStartDate(dayjs(startDate).format('YYYY-MM-DD'))
+      setFormattedEndDate(dayjs(endDate).format('YYYY-MM-DD'))
+
+      setPage(1)
+   }, [startDate, endDate])
 
    if (loading) {
       return (
@@ -86,8 +90,8 @@ function OrderList() {
                   mt: 5,
                }}
             >
-               <DatePicker label="시작일" value={startDate} onChange={(newValue)=> setStartDate(newValue)} sx={{ width: '35%' }} />
-               <DatePicker label="종료일" value={endDate} onChange={(newValue)=> setEndDate(newValue)} sx={{ width: '35%' }} />
+               <DatePicker label="시작일" value={startDate} onChange={(newValue) => setStartDate(newValue)} sx={{ width: '35%' }} />
+               <DatePicker label="종료일" value={endDate} onChange={(newValue) => setEndDate(newValue)} sx={{ width: '35%' }} />
                <Button variant="contained" onClick={handleDateFilter}>
                   날짜 검색
                </Button>
@@ -99,27 +103,27 @@ function OrderList() {
                   {orders.map((order) => (
                      <Grid xs={12} key={order.id} sx={{ width: '100%' }}>
                         <Card sx={{ display: 'flex', mb: 2, position: 'relative' }}>
-                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={} alt={} />
+                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={`${process.env.REACT_APP_API_URL}${order.Items.map((i) => i.Imgs.map((img) => img.imgUrl))}`} alt={order.Items.map((i) => i.itemNm)} />
                            <CardContent sx={{ flex: 1 }}>
                               <Typography variant="h6" gutterBottom>
-                                 {}
+                                 {order.Items.map((i) => i.itemNm)}
                               </Typography>
                               <Typography variant="body2" color="textSecondary" gutterBottom>
-                                 주문 날짜: {}
+                                 주문 날짜: {dayjs(order.orderDate).format('YYYY-MM-DD HH:mm:ss')}
                               </Typography>
                               <Typography variant="body2" color="textSecondary" gutterBottom>
-                                 총 주문 수량: {}
+                                 총 주문 수량: {order.Items.map((i) => i.OrderItem.count)}
                               </Typography>
                               <Typography variant="body2" color="textSecondary" gutterBottom>
-                                 총 주문 금액: {}원
+                                 총 주문 금액: {order.Items.map((i) => i.OrderItem.orderPrice.toLocaleString('ko-KR'))}원
                               </Typography>
                            </CardContent>
                            {order.orderStatus === 'ORDER' ? (
-                              <Button variant="contained" color="info" size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={}>
+                              <Button variant="contained" color="info" size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={() => handleCancelOrder(order.id)}>
                                  주문 취소
                               </Button>
                            ) : (
-                              <Button variant="contained" color="error" size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={}>
+                              <Button variant="contained" color="error" size="small" sx={{ position: 'absolute', top: 8, right: 8 }} onClick={() => handleDeleteOrder(order.id)}>
                                  주문 삭제
                               </Button>
                            )}

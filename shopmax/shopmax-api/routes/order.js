@@ -149,7 +149,7 @@ router.get('/list', isLoggedIn, async (req, res) => {
                   {
                      model: Img,
                      attributes: ['imgUrl'],
-                     where: { reqImgYn: 'Y' }, // 대표이미지만 가져온다
+                     where: { repImgYn: 'Y' }, // 대표이미지만 가져온다
                   },
                ],
             },
