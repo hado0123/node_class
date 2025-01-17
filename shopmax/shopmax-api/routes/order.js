@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const { sequelize } = require('../models')
 const { Order, Item, User, OrderItem, Img } = require('../models')
-const { isLoggedIn } = require('./middlewares')
+const { isLoggedIn, verifyToken } = require('./middlewares')
 const { Op } = require('sequelize')
 
 // 주문 localhost:8000/order
-router.post('/', isLoggedIn, async (req, res) => {
+router.post('/', verifyToken, isLoggedIn, async (req, res) => {
    /* ★트랜잭션 처리: 주문 처리 중 에러 발생시 차감된 재고를 복구하지 않으면 데이터가 
      불일치 상태가 되므로 트랜잭션 처리 
  
@@ -114,7 +114,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 
 // 주문 목록(페이징)
 // localhost:8000/order/list?page=1&limit=5&startDate=2025-01-01&endDate=2025-01-16
-router.get('/list', isLoggedIn, async (req, res) => {
+router.get('/list', verifyToken, isLoggedIn, async (req, res) => {
    try {
       const page = parseInt(req.query.page, 10) || 1
       const limit = parseInt(req.query.limit, 10) || 5
@@ -175,7 +175,7 @@ router.get('/list', isLoggedIn, async (req, res) => {
 })
 
 // 주문 취소 localhost:8000/order/cancel/:id
-router.post('/cancel/:id', isLoggedIn, async (req, res) => {
+router.post('/cancel/:id', verifyToken, isLoggedIn, async (req, res) => {
    const transaction = await sequelize.transaction()
 
    try {
@@ -232,7 +232,7 @@ router.post('/cancel/:id', isLoggedIn, async (req, res) => {
 })
 
 // 주문 삭제 localhost:8000/order/delete/:id
-router.delete('/delete/:id', isLoggedIn, async (req, res) => {
+router.delete('/delete/:id', verifyToken, isLoggedIn, async (req, res) => {
    try {
       const { id } = req.params
 
