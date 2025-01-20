@@ -26,8 +26,6 @@ function Chat() {
       socket.on('chat message', (msg) => {
          // messages = [
          // { user: '하서', message: '안녕하세요.' },
-         // { user: '하서', message: '반가워요.' }
-         // { user: '지은', message: '네 저도 반가워요.' }
          // ]
          setMessages((prevMessages) => [...prevMessages, msg])
       })
