@@ -20,6 +20,7 @@ import RedirectLogoutRoute from './components/auth/RedirectLogoutRoute'
 import AdminRoute from './components/auth/AdminRoute'
 import MyOrderListPage from './pages/MyOrderListPage'
 import TokenPage from './pages/TokenPage'
+import ChatPage from './pages/ChatPage'
 
 function App() {
    const dispatch = useDispatch()
@@ -97,6 +98,16 @@ function App() {
                   <AdminRoute>
                      <TokenPage />
                   </AdminRoute>
+               }
+            />
+            {/* 채팅 페이지 */}
+            <Route
+               path="/chat"
+               element={
+                  // 관리자가 아닐경우 home으로 리다이렉트
+                  <RedirectLogoutRoute>
+                     <ChatPage />
+                  </RedirectLogoutRoute>
                }
             />
          </Routes>
