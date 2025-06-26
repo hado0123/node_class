@@ -31,6 +31,7 @@ const upload = multer({
       },
       //저장할 파일 이름 설정
       filename(req, file, done) {
+         // 한글 파일 업로드시 깨지는 현상 발생 -> 나중에 프로젝트때 같이 진행
          // file.originalname = dog.png
          // ext = .png
          const ext = path.extname(file.originalname) //파일 확장차 추출
