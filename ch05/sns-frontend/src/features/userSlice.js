@@ -25,7 +25,7 @@ const userSlice = createSlice({
             state.loading = true
             state.error = null
          })
-         .addCase(followUserThunk.fulfilled, (state, action) => {
+         .addCase(followUserThunk.fulfilled, (state) => {
             state.loading = false
          })
          .addCase(followUserThunk.rejected, (state, action) => {

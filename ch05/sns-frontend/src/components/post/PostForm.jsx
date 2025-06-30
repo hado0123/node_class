@@ -21,7 +21,7 @@ const PostForm = ({ onSubmit, initialValues = {} }) => {
     }
    */
    //http://localhost8000/dog11111344242.jpg
-   const [imgUrl, setImgUrl] = useState(initialValues.img ? process.env.REACT_APP_API_URL + initialValues.img : '') // 이미지 경로(파일명 포함)
+   const [imgUrl, setImgUrl] = useState(initialValues.img ? import.meta.env.VITE_APP_API_URL + initialValues.img : '') // 이미지 경로(파일명 포함)
    const [imgFile, setImgFile] = useState(null) // 이미지 파일 객체
    const [content, setContent] = useState(initialValues.content || '') //게시물 내용
    const [hashtags, setHashtags] = useState(

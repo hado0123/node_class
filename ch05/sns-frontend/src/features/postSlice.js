@@ -70,7 +70,7 @@ const postSlice = createSlice({
             state.loading = true
             state.error = null
          })
-         .addCase(createPostThunk.fulfilled, (state, action) => {
+         .addCase(createPostThunk.fulfilled, (state) => {
             state.loading = false
          })
          .addCase(createPostThunk.rejected, (state, action) => {
@@ -112,7 +112,7 @@ const postSlice = createSlice({
             state.loading = true
             state.error = null
          })
-         .addCase(deletePostThunk.fulfilled, (state, action) => {
+         .addCase(deletePostThunk.fulfilled, (state) => {
             state.loading = false
          })
          .addCase(deletePostThunk.rejected, (state, action) => {
@@ -125,7 +125,7 @@ const postSlice = createSlice({
             state.loading = true
             state.error = null
          })
-         .addCase(updatePostThunk.fulfilled, (state, action) => {
+         .addCase(updatePostThunk.fulfilled, (state) => {
             state.loading = false
          })
          .addCase(updatePostThunk.rejected, (state, action) => {

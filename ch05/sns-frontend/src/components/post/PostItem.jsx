@@ -31,7 +31,7 @@ const PostItem = ({ post, isAuthenticated, user }) => {
 
    return (
       <Card style={{ margin: '20px 0' }}>
-         <CardMedia sx={{ height: 240 }} image={`${process.env.REACT_APP_API_URL}${post.img}`} title={post.content} />
+         <CardMedia sx={{ height: 240 }} image={`${import.meta.env.VITE_APP_API_URL}${post.img}`} title={post.content} />
          <CardContent>
             <Link to={`/my/${post.User.id}`} style={{ textDecoration: 'none' }}>
                <Typography sx={{ color: 'primary.main' }}>@{post.User.nick} </Typography>

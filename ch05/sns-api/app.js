@@ -33,7 +33,7 @@ sequelize
 //미들웨어 설정
 app.use(
    cors({
-      origin: 'http://localhost:3000', // 특정 주소만 request 허용
+      origin: 'http://localhost:5173', // 특정 주소만 request 허용
       credentials: true, // 쿠키, 세션 등 인증 정보 허용
    })
 )
