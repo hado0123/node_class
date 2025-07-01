@@ -1,5 +1,5 @@
 import { Container, Typography, Pagination, Stack } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPostsThunk } from '../features/postSlice'
 import PostItem from '../components/post/PostItem'
@@ -14,9 +14,9 @@ const Home = ({ isAuthenticated, user }) => {
    }, [dispatch, page])
 
    // 페이지 변경
-   const handlePageChange = useCallback((event, value) => {
+   const handlePageChange = (event, value) => {
       setPage(value)
-   }, [])
+   }
 
    return (
       <Container maxWidth="xs">

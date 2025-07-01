@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import { Link, useNavigate } from 'react-router-dom'
-import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { logoutUserThunk } from '../../features/authSlice'
 
@@ -9,7 +8,7 @@ const Navbar = ({ isAuthenticated, user }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
-   const handleLogout = useCallback(() => {
+   const handleLogout = () => {
       dispatch(logoutUserThunk())
          .unwrap()
          .then(() => {
@@ -18,7 +17,7 @@ const Navbar = ({ isAuthenticated, user }) => {
          .catch((error) => {
             alert(error)
          })
-   }, [dispatch, navigate])
+   }
 
    return (
       <AppBar position="static" style={{ backgroundColor: '#fff' }}>

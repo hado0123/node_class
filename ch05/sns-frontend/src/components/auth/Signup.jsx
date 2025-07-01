@@ -1,5 +1,5 @@
 import { TextField, Button, Container, Typography, CircularProgress } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserThunk } from '../../features/authSlice'
 
@@ -12,7 +12,7 @@ const Signup = () => {
    const dispatch = useDispatch()
    const { loading, error } = useSelector((state) => state.auth)
 
-   const handleSignup = useCallback(() => {
+   const handleSignup = () => {
       if (!email.trim() || !nick.trim() || !password.trim() || !confirmPassword.trim()) {
          alert('모든 필드를 입력해주세요!')
          return
@@ -33,7 +33,7 @@ const Signup = () => {
             //회원가입 중 에러 발생시
             console.error('회원가입 에러:', error)
          })
-   }, [email, nick, password, confirmPassword, dispatch])
+   }
 
    //회원가입이 완료 되었을때 보일 컴포넌트
    if (isSignupComplete) {
