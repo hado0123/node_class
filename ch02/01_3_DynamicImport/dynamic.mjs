@@ -7,6 +7,7 @@ if (a) {
 }
 */
 
+// ES모듈을 특정 조건절에서 사용가능
 if (a) {
    await import('./func.mjs')
 }

@@ -5,7 +5,7 @@ console.log(myURL.searchParams)
 console.log(myURL.searchParams.getAll('category'))
 console.log(myURL.searchParams.get('limit'))
 console.log(myURL.searchParams.get('page'))
-console.log(myURL.searchParams.has('page')) //해당키가 있는지 검사
+console.log(myURL.searchParams.has('page')) // 쿼리스트링 내부에 해당 파라메터가 있는지 확인
 
 console.log('키와 값을 가져옴-----------------------')
 console.log(myURL.searchParams.keys())

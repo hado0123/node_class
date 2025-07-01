@@ -4,7 +4,7 @@
 // console.log('checkNumber: ', checkNumber(10))
 // console.log('checkNumber: ', checkNumber(9))
 
-//2. require함수이고 함수는 객체 require는 객체로서 속성을 가지고 있음
+// 2. require는 함수고, 함수는 객체이므로 require는 객체로서 속성을 가지고 있다
 // console.log(require.main)
 
 //require는 가장 위에 오지 않아도 된다

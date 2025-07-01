@@ -1,6 +1,3 @@
-const string = 'abc'
-const number = 1
-const boolean = true
 const obj = {
    outside: {
       inside: {
@@ -14,6 +11,7 @@ console.table([
    { name: 'hero', birth: 1988 },
 ])
 
+// 객체를 콘솔에 어떻게 표시할지를 설정
 console.dir(obj, { colors: true, depth: 1 })
 console.dir(obj, { colors: true, depth: 2 })
 
