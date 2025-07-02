@@ -2,10 +2,12 @@ import { useParams } from 'react-router-dom'
 import PostEditForm from '../components/post/PostEditForm'
 import { Container } from '@mui/material'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPostByIdThunk, updatePostThunk } from '../features/postSlice'
 
 const PostEditPage = () => {
+   const navigate = useNavigate()
    const { id } = useParams() //post의 id
    const dispatch = useDispatch()
    const { post, loading, error } = useSelector((state) => state.posts)
@@ -20,7 +22,7 @@ const PostEditPage = () => {
       dispatch(updatePostThunk({ id, postData }))
          .unwrap()
          .then(() => {
-            window.location.href = '/' //수정 후 메인페이지로 이동
+            navigate('/') //게시물 수정 후 메인페이지로 이동
          })
          .catch((error) => {
             console.error('게시물 수정 중 오류 발생:', error)

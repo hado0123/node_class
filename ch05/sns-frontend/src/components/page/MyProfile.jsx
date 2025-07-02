@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { getProfileThunk, getProfileIdThunk } from '../../features/pageSlice'
 import { followUserThunk } from '../../features/userSlice'
 
@@ -19,37 +19,36 @@ const MyProfile = ({ auth }) => {
    const dispatch = useDispatch()
    const { user } = useSelector((state) => state.page)
 
-   const fetchProfileData = () => {
+   // useCallback을 사용하여 fetchProfileData 함수를 메모이제이션
+   // useCallback을 하지 않으면 fetchProfileData가 무한반복되서 실행하므로 꼭 useCallback처리
+   // fetchProfileData() 실행 → state 변화 → 렌더링 → 함수 재생성 → 의존성 변화 감지 → 다시 useEffect() 실행 -> 무한반복
+   const fetchProfileData = useCallback(() => {
       if (id) {
-         //게시물의 이름을 클릭해서 들어온 경우
-         dispatch(getProfileIdThunk(id))
-            .unwrap()
-            .then((result) => {
-               setFollowers(result.Followers.length)
-               setFollowings(result.Followings.length)
+         dispatch(getProfileIdThunk(id)) // 다른 사람 프로필 정보
+            .unwrap() // Thunk의 결과를 추출
+            .then((response) => {
+               setFollowers(response.Followers.length)
+               setFollowings(response.Followings.length)
             })
             .catch((error) => {
-               console.error('사용자 정보 가져오는 중 오류 발생:', error)
-               alert('사용자 정보 가져오기를 실패했습니다.', error)
+               alert(error)
             })
       } else {
-         //navbar의 이름을 클릭해서 들어온 경우
-         dispatch(getProfileThunk())
-            .unwrap()
-            .then((result) => {
-               setFollowers(result.Followers.length)
-               setFollowings(result.Followings.length)
+         dispatch(getProfileThunk()) // 내 정보
+            .unwrap() // Thunk의 결과를 추출
+            .then((response) => {
+               setFollowers(response.Followers.length)
+               setFollowings(response.Followings.length)
             })
             .catch((error) => {
-               console.error('사용자 정보 가져오는 중 오류 발생:', error)
-               alert('사용자 정보 가져오기를 실패했습니다.', error)
+               alert(error)
             })
       }
-   }
+   }, [dispatch, id]) // 의존성 배열에 필요한 값 추가
 
    useEffect(() => {
       fetchProfileData()
-   }, [fetchProfileData, follow])
+   }, [fetchProfileData, follow]) // follow가 변경될 때만 데이터를 다시 가져옴
 
    const onClickFollow = (id) => {
       dispatch(followUserThunk(id))
