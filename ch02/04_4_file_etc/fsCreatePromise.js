@@ -6,7 +6,7 @@ const constants = require('fs').constants //파일 시스템 관련 상수를 �
 // 권한이 없다면 에러 발생
 fs.access('./folder', constants.F_OK | constants.W_OK | constants.R_OK)
    .then(() => {
-      // 폴더가 이미 있는 경우 에러 처리
+      // 폴더가 이미 있는 경우 reject 처리
       return Promise.reject('이미 폴더 있음')
    })
    .catch((err) => {

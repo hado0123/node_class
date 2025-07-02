@@ -34,6 +34,10 @@ myEvent.on('event4', () => {
    console.log('이벤트 4')
 })
 
+myEvent.on('event4', () => {
+   console.log('이벤트 4 추가')
+})
+
 //이벤트 제거
 myEvent.removeAllListeners('event4') //모든 이벤트 제거
 myEvent.emit('event4') //실행안됨
@@ -44,7 +48,7 @@ const listener = () => {
 
 myEvent.on('event5', listener)
 
-myEvent.removeListener('event5', listener)
+myEvent.removeListener('event5', listener) //특정 이벤트 제거
 myEvent.emit('event5')
 
 //이벤트 리스너의 갯수 출력

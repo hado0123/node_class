@@ -1,8 +1,8 @@
-//then을 이용해서 순차적으로 실행
 const fs = require('fs').promises
 
 console.log('시작')
 
+// then을 사용하므로 순서대로 파일을 읽어옴
 fs.readFile('./readme2.txt')
    .then((data) => {
       console.log('1번', data.toString())
@@ -17,5 +17,5 @@ fs.readFile('./readme2.txt')
       console.log('끝')
    })
    .catch((err) => {
-      console.error(err)
+      console.log(err)
    })
