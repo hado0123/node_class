@@ -5,12 +5,18 @@ require('dotenv').config()
 const app = express()
 app.set('port', process.env.PORT || 3000)
 
-//3. static 미들웨어 사용: 정적파일에 바로 접근가능하게 하는 미들웨어
+// 3. static 미들웨어 사용: 정적파일에 바로 접근가능하게 하는 미들웨어
+// public 폴더에서 정적파일을 찾는다
 console.log(__dirname)
+console.log(path.join(__dirname, 'public'))
 
-// localhost:8000/ 로 들어왔을때
-//C:\project\node_class\ch03\02_Middleware\public 이 경로에서 정적파일을 찾는다
+// http://localhost:8000/poster.png
+// http://localhost:8000/dog.png
 app.use('/', express.static(path.join(__dirname, 'public')))
+
+// http://localhost:8000/image/poster.png
+// http://localhost:8000/image/dog.png
+// app.use('/image', express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
    res.send('홈 페이지')

@@ -20,7 +20,7 @@ const Navbar = ({ isAuthenticated, user }) => {
    }
 
    return (
-      <AppBar position="static" style={{ backgroundColor: '#fff' }}>
+      <AppBar position="static" style={{ backgroundColor: '#fff', marginBottom: 50 }}>
          <Toolbar>
             <Typography variant="h6" style={{ flexGrow: 1 }}>
                <Link to="/">

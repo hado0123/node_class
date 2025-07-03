@@ -11,8 +11,8 @@ app.use(cookieParser('my-secret-key'))
 // 쿠키 만들기
 app.get('/set-cookie', (req, res) => {
    // res.cookie(키, 값)
-   res.cookie('age', '25', { signed: false, maxAge: 1000 * 60 * 60 }) //1시간 동안 쿠키가 저장되고, 값에는 서명된 암호화가 적용
-   res.cookie('user', 'Alice', { signed: true, maxAge: 1000 * 60 * 60 })
+   res.cookie('age', '25', { signed: false, maxAge: 1000 * 60 * 60 })
+   res.cookie('user', 'Alice', { signed: true, maxAge: 1000 * 60 * 60 }) //1시간 동안 쿠키가 저장되고, 값에는 서명된 암호화가 적용
    res.send('서명된 쿠키가 설정되었습니다.')
 })
 

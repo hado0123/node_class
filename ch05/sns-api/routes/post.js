@@ -51,7 +51,7 @@ router.post('/', isLoggedIn, upload.single('img'), async (req, res) => {
       const post = await Post.create({
          content: req.body.content, // 게시물 내용
          img: `/${req.file.filename}`, //이미지 url(파일명) => /dog1231342432443.jpg
-         UserId: req.user.id, //작성자 id
+         userId: req.user.id, //작성자 id
       })
 
       //게시물 내용에서 해시태그 추출
@@ -109,7 +109,7 @@ router.post('/', isLoggedIn, upload.single('img'), async (req, res) => {
             id: post.id,
             content: post.content,
             img: post.img,
-            UserId: post.UserId,
+            userId: post.userId,
          },
          message: '게시물이 성공적으로 등록되었습니다.',
       })
@@ -123,8 +123,8 @@ router.post('/', isLoggedIn, upload.single('img'), async (req, res) => {
 router.put('/:id', isLoggedIn, upload.single('img'), async (req, res) => {
    try {
       //게시물 존재 여부 확인
-      // select * from posts where id = ? and UserId = ?
-      const post = await Post.findOne({ where: { id: req.params.id, UserId: req.user.id } })
+      // select * from posts where id = ? and userId = ?
+      const post = await Post.findOne({ where: { id: req.params.id, userId: req.user.id } })
       if (!post) {
          return res.status(404).json({ success: false, message: '게시물을 찾을 수 없습니다.' })
       }
@@ -199,7 +199,7 @@ router.put('/:id', isLoggedIn, upload.single('img'), async (req, res) => {
 router.delete('/:id', isLoggedIn, async (req, res) => {
    try {
       // 삭제할 게시물 존재 여부 확인
-      const post = await Post.findOne({ where: { id: req.params.id, UserId: req.user.id } })
+      const post = await Post.findOne({ where: { id: req.params.id, userId: req.user.id } })
       if (!post) {
          return res.status(404).json({ success: false, message: '게시물을 찾을 수 없습니다.' })
       }

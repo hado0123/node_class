@@ -14,12 +14,14 @@ app.get('/', (req, res) => {
 app.get('/error', (req, res, next) => {
    const err = new Error('에러 발생') // 강제로 에러 발생
    err.status = 500 // http 상태 코드 지정
-   next(err) // (에러객체를 넘기고 있으므로)에러처리 미들웨어로 이동
+   next(err) // 에러객체를 넘기고 있으므로 에러처리 미들웨어로 이동
 })
 
 //에러처리 미들웨어(매개변수에 err가 있는 경우)
 app.use((err, req, res, next) => {
-   console.error('Error: ', err.message)
+   console.error('Error: ', err.message) // 에러메시지
+
+   // 상태코드와 에러메세지를 json 객체로 클라이언트에게 전달
    res.status(err.status).json({
       error: {
          message: err.message,

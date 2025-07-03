@@ -41,7 +41,7 @@ const PostItem = ({ post, isAuthenticated, user }) => {
             <Button size="small" color="primary">
                <FavoriteBorderIcon fontSize="small" />
             </Button>
-            {/* isAuthenticated가 true 이면서 post.User.id와 user.id가 같을때 렌더링 => 내가 작성한 게시글만 수정, 삭제 */}
+            {/* isAuthenticated가 true 이면서 post.user.id와 user.id가 같을때 렌더링 => 내가 작성한 게시글만 수정, 삭제 */}
             {/* 로그인한 상태 이면서 로그인한 사람과 글을 작성한 사람이 같으면 렌더링 */}
             {isAuthenticated && post.User.id === user.id && (
                <Box sx={{ p: 2 }}>
