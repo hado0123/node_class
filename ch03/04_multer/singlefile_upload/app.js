@@ -19,7 +19,8 @@ try {
    fs.readdirSync('uploads') // uploads 폴더가 있는지 확인
 } catch (error) {
    //폴더가 없으면 에러가 발생
-   console.log('upload 폴더가 없어 uploads 폴더를 생성합니다.')
+   console.log('uploads 폴더가 없으므로 uploads 폴더를 생성합니다.')
+
    fs.mkdirSync('uploads') // uploads 폴더를 생성
 }
 

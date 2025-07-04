@@ -45,10 +45,10 @@ router.post('/cate/abc', (req, res) => {
 router
    .route('/cate/abc')
    .get((req, res) => {
-      res.send('')
+      res.send('GET /cate/abc')
    })
    .post((req, res) => {
-      res.send('')
+      res.send('POST /cate/abc')
    })
 
 module.exports = router //라우터를 내보냄

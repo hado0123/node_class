@@ -52,9 +52,9 @@ app.get('/upload', (req, res) => {
    res.sendFile(path.join(__dirname, 'multipart.html'))
 })
 
-// name='image'인 파일 하나만 업로드
+// name = 'many'인 파일 여러개 업로드
 app.post('/upload', upload.array('many'), (req, res) => {
-   console.log(req.files) //업로드된 파일 정보 출력
+   console.log(req.files) // 업로드된 파일 정보 출력
    res.send('파일 업로드 완료')
 })
 
