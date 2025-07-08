@@ -53,8 +53,8 @@ module.exports = class User extends Sequelize.Model {
       //User : Comment = 1 : n
       //User가 Comment를 가지고 있다(User가 부모테이블, Comment는 자식테이블)
       db.User.hasMany(db.Comment, {
-         foreignKey: 'commenter',
-         sourceKey: 'id', //User에서 Comment에게 외래키로 제공할 컬럼 이름
+         foreignKey: 'commenter', // comments 테이블에서 사용할 외래키 컬럼 이름
+         sourceKey: 'id', // user테이블에서 comments 테이블에게 외래키로 제공할 컬럼 이름
       })
    }
 }

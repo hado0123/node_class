@@ -27,7 +27,7 @@ module.exports = class Capital extends Sequelize.Model {
 
    static associate(db) {
       db.Capital.belongsTo(db.Country, {
-         foreignKey: 'countryId', //Capital에서 외래키로 사용할 컬럼명
+         foreignKey: 'country_id', //Capital에서 외래키로 사용할 컬럼명
          targetKey: 'id', //Capital이 Country에서 참조할 컬럼 이름
       })
    }

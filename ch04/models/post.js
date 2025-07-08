@@ -18,6 +18,8 @@ module.exports = class Post extends Sequelize.Model {
    }
 
    static associate(db) {
+      // n:n관계 정의
+      // through: 교차테이블 명
       db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' })
    }
 }

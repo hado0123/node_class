@@ -15,6 +15,8 @@ module.exports = class Hashtag extends Sequelize.Model {
    }
 
    static associate(db) {
+      // n:n관계 정의
+      // through: 교차테이블 명
       db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' })
    }
 }

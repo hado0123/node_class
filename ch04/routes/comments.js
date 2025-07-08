@@ -20,9 +20,9 @@ router.post('/', async (req, res, next) => {
 })
 
 // localhost:8000/comments/:id
+// 댓글 수정
 router
    .route('/:id')
-   // 댓글 수정
    .patch(async (req, res, next) => {
       try {
          const result = await Comment.update(

@@ -14,7 +14,7 @@ app.set('port', process.env.PORT || 3000)
 
 //데이터 베이스 연결 설정
 sequelize
-   .sync({ force: false }) // 기존 테이블을 초기화 할지여부 -> 초기화 X
+   .sync({ force: false }) // 데이터베이스에 이미 존재하는 테이블을 삭제하고 새로 생성할지 여부
    .then(() => {
       console.log('데이터베이스 연결 성공')
    })
@@ -23,29 +23,31 @@ sequelize
    })
 
 //공통 미들웨어 설정
-app.use(morgan('dev'))
+app.use(morgan('dev')) // 로그 기록
 app.use(express.static(path.join(__dirname, 'public'))) // 정적 파일 제공
-app.use(express.json())
+app.use(express.json()) // request 데이터를 json 객체로 받아옴
 app.use(express.urlencoded({ extended: false }))
 
 //라우터 연결
-app.use('/', indexRouter)
-app.use('/users', usersRouter)
-app.use('/comments', commentsRouter)
+app.use('/', indexRouter) // localhost:8000/
+app.use('/users', usersRouter) // localhost:8000/users
+app.use('/comments', commentsRouter) // localhost:8000/comments
 
 //에러처리 미들웨어
+
+// 요청 경로에 해당하는 라우터가 없을때(경로를 잘못 찾아왔을때)
 app.use((req, res, next) => {
-   //요청 경로에 해당하는 라우터가 없을때
    const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`)
    error.status = 404 //404: not found
    next(error) //다음 에러처리 미들웨어로 이동
 })
 
+//  모든 에러처리
 app.use((err, req, res, next) => {
    const status = err.status || 500
    const message = err.message || '서버 에러'
 
-   // 에러 정보를 브라우저로 전달
+   // 에러 정보를 response
    res.status(status).send(`
       <h1>Error ${status}</h1>
       <p>${message}</p>

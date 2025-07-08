@@ -33,8 +33,8 @@ module.exports = class Comment extends Sequelize.Model {
    static associate(db) {
       //Comment는 User에 속해있다(User가 부모테이블, Comment는 자식테이블)
       db.Comment.belongsTo(db.User, {
-         foreignKey: 'commenter', //Comment 외래키 컬럼 이름
-         targetKey: 'id', //Comment가 User에서 참조할 컬럼 이름
+         foreignKey: 'commenter', // comments 테이블에서 사용할 외래키 컬럼 이름
+         targetKey: 'id', // users 테이블에서 참조하는 컬럼이름(user 테이블의 PK)
       })
    }
 }
