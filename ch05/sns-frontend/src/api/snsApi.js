@@ -8,7 +8,7 @@ const snsApi = axios.create({
    headers: {
       'Content-Type': 'application/json',
    },
-   withCredentials: true, // 세션 쿠키를 요청에 포함
+   withCredentials: true,
 })
 
 //회원가입

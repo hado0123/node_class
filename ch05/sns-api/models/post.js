@@ -30,14 +30,14 @@ module.exports = class Post extends Sequelize.Model {
 
    static associate(db) {
       db.Post.belongsTo(db.User, {
-         foreignKey: 'userId', // Post 테이블에 존재하는 컬럼 (외래키)
-         targetKey: 'id', // User 테이블의 기준 컬럼 (기본키)
+         foreignKey: 'user_id',
+         targetKey: 'id',
       })
 
       db.Post.belongsToMany(db.Hashtag, {
          through: 'PostHashtag',
-         foreignKey: 'postId',
-         otherKey: 'hashtagId',
+         foreignKey: 'post_id', // 교차테이블에서 Post 모델의 FK
+         otherKey: 'hashtag_id', // Hashtag 모델의 FK
       })
    }
 }

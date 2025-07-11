@@ -20,11 +20,11 @@ module.exports = class User extends Sequelize.Model {
          },
          {
             sequelize,
-            timestamps: true, //createAt, updateAt ..등 자동 생성
+            timestamps: true, //createAt, updateAt 자동 생성
             underscored: false,
             modelName: 'User',
             tableName: 'users',
-            paranoid: true,
+            paranoid: true, // deleteAt 자동생성, 소프트 삭제
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci',
          }
@@ -33,7 +33,7 @@ module.exports = class User extends Sequelize.Model {
 
    static associate(db) {
       db.User.hasMany(db.Post, {
-         foreignKey: 'userId', // Post 테이블의 외래키 컬럼
+         foreignKey: 'user_id', // Post 테이블의 외래키 컬럼
          sourceKey: 'id', // User 테이블의 기준 컬럼
       })
 

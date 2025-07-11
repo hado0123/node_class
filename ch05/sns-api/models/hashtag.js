@@ -26,8 +26,8 @@ module.exports = class Hashtag extends Sequelize.Model {
    static associate(db) {
       db.Hashtag.belongsToMany(db.Post, {
          through: 'PostHashtag',
-         foreignKey: 'hashtagId', // 교차 테이블에서 이 모델의 FK
-         otherKey: 'postId', // 반대 모델의 FK
+         foreignKey: 'hashtag_id', // 교차테이블에서 Hashtag 모델의 FK
+         otherKey: 'post_id', // post 모델의 FK
       })
    }
 }

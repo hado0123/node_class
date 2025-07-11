@@ -22,12 +22,12 @@ app.set('port', process.env.PORT || 8002)
 
 // 시퀄라이즈를 사용한 DB연결
 sequelize
-   .sync({ force: false })
+   .sync({ force: false }) // 데이터 베이스에 이미 존재하는 테이블 삭제하고 새로 생성할지 여부
    .then(() => {
-      console.log('데이터베이스 연결 성공') //연결 성공시
+      console.log('데이터베이스 연결 성공') // 연결 성공시
    })
    .catch((err) => {
-      console.error(err) //연결 실패시 오류 출력
+      console.error(err) // 연결 실패시
    })
 
 //미들웨어 설정
@@ -49,6 +49,7 @@ app.use(
       saveUninitialized: true, //초기화 되지 않은 세션 저장 여부 -> 초기화 되지 않은 빈 세션도 저장
       secret: process.env.COOKIE_SECRET, //세션 암호화 키
       cookie: {
+         // maxAge를 설정하지 않으면 브라우저가 꺼지면 쿠키도 삭제됨
          httpOnly: true, //javascript로 쿠키에 접근가능한지 여부 -> true 일경우 접근 X
          secure: false, //https를 사용할때만 쿠키 전송 여부 -> http, https 둘다 사용가능
       },
@@ -60,11 +61,11 @@ app.use(passport.initialize()) //초기화
 app.use(passport.session()) //Passport와 생성해둔 세션 연결
 
 //라우터 등록
-app.use('/', indexRouter)
-app.use('/auth', authRouter)
-app.use('/post', postRouter)
-app.use('/page', pageRouter)
-app.use('/user', userRouter)
+app.use('/', indexRouter) // localhost:8000/
+app.use('/auth', authRouter) // localhost:8000/auth
+app.use('/post', postRouter) // localhost:8000/post
+app.use('/page', pageRouter) // localhost:8000/page
+app.use('/user', userRouter) // localhost:8000/user
 
 //잘못된 라우터 경로 처리
 app.use((req, res, next) => {
@@ -73,18 +74,19 @@ app.use((req, res, next) => {
    next(error) //에러 미들웨어로 전달
 })
 
-//에러 미들웨어(미들웨어 실행 중 발생하는 에러를 처리함)
+//에러 미들웨어
 app.use((err, req, res, next) => {
-   const statusCode = err.status || 500 // err.status가 있으면 err.status 저장 없으면 500
+   const statusCode = err.status || 500
    const errorMessage = err.message || '서버 내부 오류'
 
    //개발 중에 서버 콘솔에서 상세한 에러 확인 용도
-   console.log(err)
+   // console.log(err)
 
+   // 클라이언트에 에러 json 객체 response
    res.status(statusCode).json({
-      success: false,
-      message: errorMessage,
-      error: err,
+      success: false, // 성공여부(필수 값 X)
+      message: errorMessage, // 에러메세지
+      error: err, // 에러 객체
    })
 })
 
