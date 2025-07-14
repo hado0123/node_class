@@ -72,6 +72,7 @@ const postSlice = createSlice({
          })
          .addCase(createPostThunk.fulfilled, (state) => {
             state.loading = false
+            state.post = action.payload
          })
          .addCase(createPostThunk.rejected, (state, action) => {
             state.loading = false
