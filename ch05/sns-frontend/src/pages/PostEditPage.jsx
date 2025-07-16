@@ -26,7 +26,7 @@ const PostEditPage = () => {
          })
          .catch((error) => {
             console.error('게시물 수정 중 오류 발생:', error)
-            alert('게시물 수정에 실패했습니다.', error)
+            alert('게시물 수정에 실패했습니다.')
          })
    }
 
