@@ -30,7 +30,7 @@ function ItemSellList({ searchTerm }) {
 
    return (
       <Box sx={{ padding: '20px' }}>
-         {items?.length > 0 ? (
+         {items.length > 0 ? (
             <Box
                sx={{
                   display: 'grid',
@@ -52,7 +52,7 @@ function ItemSellList({ searchTerm }) {
                         <CardMedia
                            component="img"
                            height="140"
-                           image={`${import.meta.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`}
+                           image={`${process.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`}
                            /*
                                [{
                                  id:35,

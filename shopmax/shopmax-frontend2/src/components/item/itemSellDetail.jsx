@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Alert, CardMedia } from '@mui/material'
-import Grid from '@mui/material/Grid'
-// import { NumberInput } from '../../styles/NumberInputBasic'
+import Grid from '@mui/material/Grid2'
+import { NumberInput } from '../../styles/NumberInputBasic'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
 import { fetchItemByIdThunk } from '../../features/itemSlice'
 import { formatWithComma } from '../../utils/priceSet'
@@ -87,7 +87,7 @@ function ItemSellDetail() {
                   <Grid container spacing={10}>
                      {/* 왼쪽 이미지 */}
                      <Grid xs={12} md={6}>
-                        <CardMedia component="img" image={`${import.meta.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`} alt={item.itemNm} sx={{ width: '450px', borderRadius: '8px' }} />
+                        <CardMedia component="img" image={`${process.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`} alt={item.itemNm} sx={{ width: '450px', borderRadius: '8px' }} />
                      </Grid>
 
                      {/* 오른쪽 상세 정보 */}
@@ -108,7 +108,7 @@ function ItemSellDetail() {
                            <Alert severity="error">품절</Alert>
                         ) : (
                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-                              {/* <NumberInput aria-label="Demo number input" placeholder="수량" value={count} onChange={handleQuantityChange} min={1} max={item.stockNumber} /> */}
+                              <NumberInput aria-label="Demo number input" placeholder="수량" value={count} onChange={handleQuantityChange} min={1} max={item.stockNumber} />
                               <Typography variant="h6">총 가격: {formatWithComma(String(orderPrice))}원</Typography>
                               <Button variant="contained" color="primary" onClick={handleBuy}>
                                  구매하기
@@ -130,7 +130,7 @@ function ItemSellDetail() {
                   <Grid container spacing={2}>
                      {item.Imgs.map((img, index) => (
                         <Grid xs={12} sm={6} md={4} key={index}>
-                           <CardMedia component="img" image={`${import.meta.env.REACT_APP_API_URL}${img.imgUrl}`} alt={`상세 이미지 ${index + 1}`} sx={{ width: '100%', borderRadius: '8px' }} />
+                           <CardMedia component="img" image={`${process.env.REACT_APP_API_URL}${img.imgUrl}`} alt={`상세 이미지 ${index + 1}`} sx={{ width: '100%', borderRadius: '8px' }} />
                         </Grid>
                      ))}
                   </Grid>

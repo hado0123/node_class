@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, CardContent, Typography, Button, Pagination, CircularProgress } from '@mui/material'
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid2'
 // npm install @mui/x-date-pickers 설치 후 사용
 // yarn add @mui/x-date-pickers 설치 후 사용
 // https://mui.com/x/react-date-pickers/date-picker/
@@ -141,7 +141,7 @@ function OrderList() {
                   {orders.map((order) => (
                      <Grid xs={12} key={order.id} sx={{ width: '100%' }}>
                         <Card sx={{ display: 'flex', mb: 2, position: 'relative' }}>
-                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={`${import.meta.env.REACT_APP_API_URL}${order.Items.map((i) => i.Imgs.map((img) => img.imgUrl))}`} alt={order.Items.map((i) => i.itemNm)} />
+                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={`${process.env.REACT_APP_API_URL}${order.Items.map((i) => i.Imgs.map((img) => img.imgUrl))}`} alt={order.Items.map((i) => i.itemNm)} />
                            <CardContent sx={{ flex: 1 }}>
                               <Typography variant="h6" gutterBottom>
                                  {order.Items.map((i) => i.itemNm)}
