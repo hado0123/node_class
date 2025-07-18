@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import ItemForm from '../components/item/ItemForm'
+import ItemCreateForm from '../components/item/ItemCreateForm'
 
 import { useDispatch } from 'react-redux'
 import { useCallback } from 'react'
@@ -10,7 +10,7 @@ function ItemCreatePage() {
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
-   const handleSubmit = useCallback(
+   const onCreateSubmit = useCallback(
       (itemData) => {
          dispatch(createItemThunk(itemData))
             .unwrap()
@@ -28,7 +28,7 @@ function ItemCreatePage() {
    return (
       <Container maxWidth="md" sx={{ marginTop: 10, marginBottom: 13 }}>
          <h1>상품 등록</h1>
-         <ItemForm onSubmit={handleSubmit} />
+         <ItemCreateForm onCreateSubmit={onCreateSubmit} />
       </Container>
    )
 }

@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback } from 'react'
 import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
 import { formatWithComma, stripComma } from '../../utils/priceSet'
 
-function ItemForm({ onSubmit, initialValues = {} }) {
+function ItemCreateFrom({ onCreateSubmit }) {
    // 이미지가 여러개 이므로 배열로 다룬다
    /*
     [
@@ -11,20 +11,18 @@ function ItemForm({ onSubmit, initialValues = {} }) {
       'http://localhost:8000/model_61736383153113.png',
     ]
    */
-   const [imgUrls, setImgUrls] = useState(initialValues.Imgs ? initialValues.Imgs.map((img) => import.meta.env.VITE_APP_API_URL + img.imgUrl) : []) // 이미지 경로
+   const [imgUrls, setImgUrls] = useState([]) // 이미지 경로
    const [imgFiles, setImgFiles] = useState([]) // 이미지 파일 객체
 
-   const [itemNm, setItemNm] = useState(initialValues.itemNm || '') // 상품명
-   const [price, setPrice] = useState(initialValues.price ? String(initialValues.price) : '') // 가격
-   const [stockNumber, setStockNumber] = useState(initialValues.stockNumber || '') // 재고
-   const [itemSellStatus, setItemSellStatus] = useState(initialValues.itemSellStatus || 'SELL') // 판매상태
-   const [itemDetail, setItemDetail] = useState(initialValues.itemDetail || '') // 상품설명
+   const [itemNm, setItemNm] = useState('') // 상품명
+   const [price, setPrice] = useState('') // 가격
+   const [stockNumber, setStockNumber] = useState('') // 재고
+   const [itemSellStatus, setItemSellStatus] = useState('SELL') // 판매상태
+   const [itemDetail, setItemDetail] = useState('') // 상품설명
 
    // 이미지 파일 변경(이미지 미리보기, 이미지 파일 객체를 imgFiles에 저장)
    const handleImageChange = useCallback((e) => {
       const files = e.target.files // 업로드된 모든 파일 객체 가져오기
-      // console.log(files)
-      // console.log(files[0])
 
       if (!files || files.length === 0) return // 파일이 없거나 길이가 0이면 함수 종료
 
@@ -82,8 +80,7 @@ function ItemForm({ onSubmit, initialValues = {} }) {
             return
          }
 
-         // && imgUrls.length === 0 수정시 이미지를 바꾸지 않으면 alert 창이 뜨는 현상을 방지
-         if (imgFiles.length === 0 && imgUrls.length === 0) {
+         if (imgFiles.length === 0) {
             alert('이미지를 최소 1개 이상 업로드하세요.')
             return
          }
@@ -101,9 +98,9 @@ function ItemForm({ onSubmit, initialValues = {} }) {
             formData.append('img', encodedFile)
          })
 
-         onSubmit(formData)
+         onCreateSubmit(formData)
       },
-      [itemNm, price, stockNumber, itemSellStatus, itemDetail, imgFiles, onSubmit, imgUrls]
+      [itemNm, price, stockNumber, itemSellStatus, itemDetail, imgFiles, onCreateSubmit, imgUrls]
    )
 
    // 가격에서 콤마 제거
@@ -129,9 +126,6 @@ function ItemForm({ onSubmit, initialValues = {} }) {
 
       setStockNumber(rawValue)
    }, [])
-
-   // 등록 / 수정 버튼 라벨
-   const submitButtonLabel = useMemo(() => (initialValues.id ? '수정하기' : '등록하기'), [initialValues.id])
 
    return (
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }} encType="multipart/form-data">
@@ -202,12 +196,12 @@ function ItemForm({ onSubmit, initialValues = {} }) {
          {/* 상품설명 입력 필드 */}
          <TextField label="상품설명" variant="outlined" fullWidth multiline rows={4} value={itemDetail} onChange={(e) => setItemDetail(e.target.value)} sx={{ mt: 2 }} />
 
-         {/* 등록 / 수정 버튼 */}
+         {/* 등록 버튼 */}
          <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-            {submitButtonLabel}
+            등록하기
          </Button>
       </Box>
    )
 }
 
-export default ItemForm
+export default ItemCreateFrom

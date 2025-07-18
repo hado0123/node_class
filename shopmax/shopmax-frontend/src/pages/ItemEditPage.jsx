@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import ItemForm from '../components/item/ItemForm'
+import ItemEditForm from '../components/item/ItemEditForm'
 
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,7 +25,7 @@ function ItemEditPage() {
    }, [dispatch, id])
 
    // 상품수정
-   const handleSubmit = useCallback(
+   const onEditSubmit = useCallback(
       (itemData) => {
          dispatch(updateItemThunk({ id, itemData }))
             .unwrap()
@@ -43,7 +43,7 @@ function ItemEditPage() {
    return (
       <Container maxWidth="md" sx={{ marginTop: 10, marginBottom: 13 }}>
          <h1>상품 수정</h1>
-         {item && <ItemForm onSubmit={handleSubmit} initialValues={item} />}
+         {item && <ItemEditForm onEditSubmit={onEditSubmit} initialValues={item} />}
       </Container>
    )
 }
