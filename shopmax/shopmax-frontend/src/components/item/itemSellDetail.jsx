@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Alert, CardMedia } from '@mui/material'
 import Grid from '@mui/material/Grid'
-// import { NumberInput } from '../../styles/NumberInputBasic'
+import NumberInput from '../../styles/NumberInput'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
 import { fetchItemByIdThunk } from '../../features/itemSlice'
 import { formatWithComma } from '../../utils/priceSet'
@@ -31,11 +31,6 @@ function ItemSellDetail() {
          setOrderPrice(item.price * count) // 상품가격 * 수량
       }
    }, [item, count])
-
-   // 수량증가
-   const handleQuantityChange = useCallback((event, value) => {
-      setCount(value)
-   }, [])
 
    // 상품 주문
    const handleBuy = useCallback(() => {
@@ -108,7 +103,7 @@ function ItemSellDetail() {
                            <Alert severity="error">품절</Alert>
                         ) : (
                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-                              {/* <NumberInput aria-label="Demo number input" placeholder="수량" value={count} onChange={handleQuantityChange} min={1} max={item.stockNumber} /> */}
+                              <NumberInput onChange={(e) => setCount(Number(e.target.value))} value={count} min={1} max={item.stockNumber} step={1} />
                               <Typography variant="h6">총 가격: {formatWithComma(String(orderPrice))}원</Typography>
                               <Button variant="contained" color="primary" onClick={handleBuy}>
                                  구매하기
