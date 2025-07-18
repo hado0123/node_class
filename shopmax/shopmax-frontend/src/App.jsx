@@ -1,5 +1,5 @@
 import './styles/common.css'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkAuthStatusThunk } from './features/authSlice'
 import { useEffect } from 'react'
@@ -24,6 +24,7 @@ import ChatPage from './pages/ChatPage'
 
 function App() {
    const dispatch = useDispatch()
+   const location = useLocation()
    const { isAuthenticated, user } = useSelector((state) => state.auth) //로그인 상태, 로그인 한 사용자 정보
 
    //새로고침시 redux state가 초기화 되거나 프로그램 실행 중 문제 발생 가능성이 있으므로 지속적인 로그인 상태 확인을 위해 사용
@@ -86,7 +87,7 @@ function App() {
                element={
                   // 관리자가 아닐경우 home으로 리다이렉트
                   <AdminRoute>
-                     <ItemListPage />
+                     <ItemListPage key={location.key} />
                   </AdminRoute>
                }
             />

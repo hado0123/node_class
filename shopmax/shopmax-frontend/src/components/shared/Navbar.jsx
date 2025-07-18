@@ -14,13 +14,14 @@ import { Link as MUILink } from '@mui/material'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
 // https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { logoutUserThunk } from '../../features/authSlice'
 
 function Navbar({ isAuthenticated, user }) {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [anchorElNav, setAnchorElNav] = useState(null)
    const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -28,12 +29,12 @@ function Navbar({ isAuthenticated, user }) {
       dispatch(logoutUserThunk())
          .unwrap()
          .then(() => {
-            window.location.href = '/' // 로그아웃시 새로고침
+            navigate('/') // 로그아웃시 홈으로 이동
          })
          .catch((error) => {
             alert(`로그아웃 실패: ${error}`)
          })
-   }, [dispatch])
+   }, [dispatch, navigate])
 
    const handleOpenNavMenu = useCallback((event) => {
       setAnchorElNav(event.currentTarget)

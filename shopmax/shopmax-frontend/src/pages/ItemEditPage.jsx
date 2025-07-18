@@ -1,7 +1,7 @@
 import { Container } from '@mui/material'
 import ItemForm from '../components/item/ItemForm'
 
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
 import { fetchItemByIdThunk, updateItemThunk } from '../features/itemSlice'
@@ -9,6 +9,7 @@ import { fetchItemByIdThunk, updateItemThunk } from '../features/itemSlice'
 function ItemEditPage() {
    const { id } = useParams() //item의 id
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { item } = useSelector((state) => state.items)
 
    // 특정 상품 불러오기
@@ -19,7 +20,7 @@ function ItemEditPage() {
          .catch((error) => {
             console.error('상품을 불러오는 중 오류 발생:', error)
             alert(`상품 불러오기 실패: ${error}`)
-            window.location.href = '/items/createlist' // 리스트 페이지로 이동
+            navigate('/items/createlist') // 리스트 페이지로 이동
          })
    }, [dispatch, id])
 

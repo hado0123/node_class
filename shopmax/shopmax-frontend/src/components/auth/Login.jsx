@@ -1,7 +1,7 @@
 import { TextField, Button, Container, Typography, CircularProgress } from '@mui/material'
 
-import React, { useState, useMemo, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useMemo, useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUserThunk } from '../../features/authSlice'
 
@@ -9,6 +9,7 @@ function Login() {
    const [email, setEmail] = useState('') // 이메일 상태
    const [password, setPassword] = useState('') // 비밀번호 상태
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { loading, error } = useSelector((state) => state.auth)
 
    const handleLogin = useCallback(
@@ -19,8 +20,9 @@ function Login() {
             dispatch(loginUserThunk({ email, password }))
                .unwrap()
                .then(() => {
-                  window.location.href = '/'
-               }) //로그인 성공시 메인페이지로 이동
+                  //로그인 성공시 메인페이지로 이동
+                  navigate('/')
+               })
                .catch((error) => console.error('로그인 실패:', error)) //로그인 실패시 에러 출력
          } else {
             alert('이메일과 패스워드를 입력해주세요!')

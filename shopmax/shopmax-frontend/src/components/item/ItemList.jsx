@@ -3,13 +3,14 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import dayjs from 'dayjs'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchItemsThunk, deleteItemThunk } from '../../features/itemSlice'
 import { formatWithComma } from '../../utils/priceSet'
 
 function ItemList() {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { items, pagination, loading, error } = useSelector((state) => state.items)
 
    const [searchTerm, setSearchTerm] = useState('') // 검색어
@@ -27,7 +28,7 @@ function ItemList() {
             dispatch(deleteItemThunk(id))
                .unwrap()
                .then(() => {
-                  window.location.href = '/items/createlist' //삭제후 리스트로 이동
+                  navigate('/items/createlist') // 삭제 후 리스트로 이동
                })
                .catch((error) => {
                   console.error('삭제 에러:', error)

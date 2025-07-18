@@ -3,6 +3,7 @@ import { TextField, Button, Container, Typography, CircularProgress } from '@mui
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserThunk } from '../../features/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
    const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ function Signup() {
    const [address, setAddress] = useState('')
    const [isSignupComplete, setIsSignupComplete] = useState(false) // 회원가입 완료 상태
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { loading, error } = useSelector((state) => state.auth)
 
    const validateEmail = (email) => {
@@ -72,7 +74,7 @@ function Signup() {
                color="primary"
                fullWidth
                style={{ marginTop: '20px' }}
-               onClick={() => (window.location.href = '/login')} // 로그인 페이지로 이동
+               onClick={() => navigate('/login')} // 로그인 페이지로 이동
             >
                로그인 하러 가기
             </Button>
