@@ -11,7 +11,7 @@ function ItemForm({ onSubmit, initialValues = {} }) {
       'http://localhost:8000/model_61736383153113.png',
     ]
    */
-   const [imgUrls, setImgUrls] = useState(initialValues.Imgs ? initialValues.Imgs.map((img) => import.meta.env.REACT_APP_API_URL + img.imgUrl) : []) // 이미지 경로
+   const [imgUrls, setImgUrls] = useState(initialValues.Imgs ? initialValues.Imgs.map((img) => import.meta.env.VITE_APP_API_URL + img.imgUrl) : []) // 이미지 경로
    const [imgFiles, setImgFiles] = useState([]) // 이미지 파일 객체
 
    const [itemNm, setItemNm] = useState(initialValues.itemNm || '') // 상품명

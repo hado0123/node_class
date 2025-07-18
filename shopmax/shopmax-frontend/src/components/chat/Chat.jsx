@@ -3,7 +3,7 @@ import { io } from 'socket.io-client'
 import { TextField, Button, Box } from '@mui/material'
 
 // 서버와 연결 => connection 진행
-const socket = io(import.meta.env.REACT_APP_API_URL, {
+const socket = io(import.meta.env.VITE_APP_API_URL, {
    withCredentials: true, //소켓에서 세션을 사용하므로 쿠키를 포함하여 세션 유지
 })
 

@@ -87,7 +87,7 @@ function ItemSellDetail() {
                   <Grid container spacing={10}>
                      {/* 왼쪽 이미지 */}
                      <Grid xs={12} md={6}>
-                        <CardMedia component="img" image={`${import.meta.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`} alt={item.itemNm} sx={{ width: '450px', borderRadius: '8px' }} />
+                        <CardMedia component="img" image={`${import.meta.env.VITE_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`} alt={item.itemNm} sx={{ width: '450px', borderRadius: '8px' }} />
                      </Grid>
 
                      {/* 오른쪽 상세 정보 */}
@@ -130,7 +130,7 @@ function ItemSellDetail() {
                   <Grid container spacing={2}>
                      {item.Imgs.map((img, index) => (
                         <Grid xs={12} sm={6} md={4} key={index}>
-                           <CardMedia component="img" image={`${import.meta.env.REACT_APP_API_URL}${img.imgUrl}`} alt={`상세 이미지 ${index + 1}`} sx={{ width: '100%', borderRadius: '8px' }} />
+                           <CardMedia component="img" image={`${import.meta.env.VITE_APP_API_URL}${img.imgUrl}`} alt={`상세 이미지 ${index + 1}`} sx={{ width: '100%', borderRadius: '8px' }} />
                         </Grid>
                      ))}
                   </Grid>

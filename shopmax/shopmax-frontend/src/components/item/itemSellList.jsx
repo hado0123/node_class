@@ -52,7 +52,7 @@ function ItemSellList({ searchTerm }) {
                         <CardMedia
                            component="img"
                            height="140"
-                           image={`${import.meta.env.REACT_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`}
+                           image={`${import.meta.env.VITE_APP_API_URL}${item.Imgs.filter((img) => img.repImgYn === 'Y')[0].imgUrl}`}
                            /*
                                [{
                                  id:35,

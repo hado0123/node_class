@@ -141,7 +141,7 @@ function OrderList() {
                   {orders.map((order) => (
                      <Grid xs={12} key={order.id} sx={{ width: '100%' }}>
                         <Card sx={{ display: 'flex', mb: 2, position: 'relative' }}>
-                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={`${import.meta.env.REACT_APP_API_URL}${order.Items.map((i) => i.Imgs.map((img) => img.imgUrl))}`} alt={order.Items.map((i) => i.itemNm)} />
+                           <CardMedia component="img" sx={{ height: 150, width: 170 }} image={`${import.meta.env.VITE_APP_API_URL}${order.Items.map((i) => i.Imgs.map((img) => img.imgUrl))}`} alt={order.Items.map((i) => i.itemNm)} />
                            <CardContent sx={{ flex: 1 }}>
                               <Typography variant="h6" gutterBottom>
                                  {order.Items.map((i) => i.itemNm)}

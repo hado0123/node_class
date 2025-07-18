@@ -99,7 +99,7 @@ app.use((err, req, res, next) => {
    })
 })
 
-app.options('*', cors()) // 모든 경로에 대한 options 요청을 허용
+// app.options('*', cors()) // 모든 경로에 대한 options 요청을 허용
 // app.listen(app.get('port'), () => {
 //    console.log(app.get('port'), '번 포트에서 대기중')
 // })
