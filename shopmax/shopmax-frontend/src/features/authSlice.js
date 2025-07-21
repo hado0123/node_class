@@ -27,7 +27,7 @@ export const logoutUserThunk = createAsyncThunk('auth/logoutUser', async (_, { r
       const response = await logoutUser()
       return response.data
    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || '로그아웃 실패')
+      return rejectWithValue(error.response?.data?.message)
    }
 })
 
@@ -37,7 +37,7 @@ export const checkAuthStatusThunk = createAsyncThunk('auth/checkAuthStatus', asy
       const response = await checkAuthStatus()
       return response.data
    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || '상태 확인 실패')
+      return rejectWithValue(error.response?.data?.message)
    }
 })
 
@@ -46,7 +46,7 @@ const authSlice = createSlice({
    initialState: {
       user: null,
       isAuthenticated: false, //로그인 상태: 로그인이 되어있으면 true 그렇지 않으면 false
-      loading: true,
+      loading: false,
       error: null,
    },
    reducers: {},

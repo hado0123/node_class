@@ -1,6 +1,6 @@
 import { TextField, Button, Container, Typography, CircularProgress } from '@mui/material'
 
-import { useState, useMemo, useCallback } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUserThunk } from '../../features/authSlice'
@@ -32,24 +32,6 @@ function Login() {
       [dispatch, email, password]
    )
 
-   const loginButtonContent = useMemo(
-      () =>
-         loading ? (
-            <CircularProgress
-               size={24}
-               sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-               }}
-            />
-         ) : (
-            '로그인'
-         ),
-      [loading]
-   ) // 로딩 상태가 변경될 때만 버튼 내용이 다시 렌더링됨
-
    return (
       <Container maxWidth="sm">
          <Typography variant="h4" gutterBottom>
@@ -68,7 +50,19 @@ function Login() {
             <TextField label="비밀번호" type="password" name="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} />
 
             <Button variant="contained" color="primary" type="submit" fullWidth disabled={loading} sx={{ position: 'relative', marginTop: '20px' }}>
-               {loginButtonContent}
+               {loading ? (
+                  <CircularProgress
+                     size={24}
+                     sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                     }}
+                  />
+               ) : (
+                  '로그인'
+               )}
             </Button>
          </form>
 

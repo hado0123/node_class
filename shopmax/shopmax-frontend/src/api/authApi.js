@@ -6,7 +6,7 @@ export const registerUser = async (userData) => {
       const response = await shopmaxApi.post('/auth/join', userData)
       return response
    } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
+      console.error(`API Request 오류: ${error}`)
       throw error // registerUser() 함수를 실행 한 곳으로 에러메세지를 던짐
    }
 }
@@ -17,7 +17,7 @@ export const loginUser = async (credentials) => {
       const response = await shopmaxApi.post('/auth/login', credentials)
       return response
    } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
+      console.error(`API Request 오류: ${error}`)
       throw error
    }
 }
@@ -28,7 +28,7 @@ export const logoutUser = async () => {
       const response = await shopmaxApi.get('/auth/logout')
       return response
    } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
+      console.error(`API Request 오류: ${error}`)
       throw error
    }
 }
@@ -39,7 +39,7 @@ export const checkAuthStatus = async () => {
       const response = await shopmaxApi.get('/auth/status')
       return response
    } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
+      console.error(`API Request 오류: ${error}`)
       throw error
    }
 }

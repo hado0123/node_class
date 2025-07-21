@@ -56,7 +56,7 @@ function Navbar({ isAuthenticated, user }) {
       <AppBar position="fixed" sx={{ backgroundColor: '#fff', color: '#000' }}>
          <Container maxWidth="lg">
             <Toolbar disableGutters>
-               {/* pc버전 메뉴 */}
+               {/* 모바일 메뉴 */}
                <ShoppingBasketIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                <Typography
                   variant="h6"
@@ -111,7 +111,7 @@ function Navbar({ isAuthenticated, user }) {
                   </Menu>
                </Box>
 
-               {/* 모바일 메뉴 */}
+               {/* PC 메뉴 */}
                <ShoppingBasketIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                <Typography
                   variant="h5"
